@@ -5,9 +5,13 @@
   gather_facts: yes                                                
   connection: ssh 
 
+  vars:
+    instance_type: t2.micro
+
   tasks:
   - name: Gather EC2 Facts about the running instance(s)
     action: ec2_facts
 
   - name: Display EC2 instance type
     debug: msg='{{ ansible_ec2_instance_type }}'  
+    when: ansible_ec2_instance_type == '{{ instance_type }}'
