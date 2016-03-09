@@ -1,0 +1,21 @@
+---
+- hosts: local
+  connection: local
+  remote_user: abhishek
+  become_method: sudo
+  gather_facts: no
+  vars:
+    new_key_pair: "Ansible_Test_Key_Pair"
+    state: "{{ state }}"
+  vars_files:
+  - files/awscreds.yml 
+
+  tasks:
+  - name: Create a new SSH Key Pair
+    ec2_key:
+      aws_access_key: "{{ aws_id }}"
+      aws_secret_key: "{{ aws_key }}" 
+      name: "{{ new_key_pair }}"
+      region: ap-southeast-1
+      state: "{{ state }}"
+
