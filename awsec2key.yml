@@ -7,8 +7,6 @@
   vars:
     new_key_pair: "Ansible_Test_Key_Pair"
     state: "{{ state }}"
-  vars_files:
-  - files/awscreds.yml 
 
   tasks:
   - name: Create a new SSH Key Pair

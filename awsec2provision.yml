@@ -1,0 +1,31 @@
+--- 
+- hosts: local
+  remote_user: abhishek
+  connection: local
+  gather_facts: no
+  become_method: sudo
+
+  vars:
+    instance_type: "{{ var_instance_type | default('t2.micro') }}"
+    ami_id: "{{ var_ami_id | default('ami-0103cd62') }}"
+    assign_public_ip: "{{ var_assign_public_ip | default('no') }}"
+    count: "{{ var_count | default(omit) }}"
+    ebs_optimized: "{{ var_ebs_optimized | default('no') }}"
+    key_name: "{{ var_key_name | default('Ansible_Test_Key_Pair') }}"
+    vpc_subnet_id: "{{ var_vpc_subnet_id | default(omit) }}"
+    state: "{{ var_state | default('present') }}"
+    region: "{{ var_region | default('ap-southeast-1') }}"
+
+  tasks:
+  - name: Basic Provisioning of desired EC2 instance(s) 
+    ec2:
+      region: "{{ region }}"
+      instance_type: "{{ instance_type }}"
+      image: "{{ ami_id }}"
+      assign_public_ip: "{{ assign_public_ip }}"
+      vpc_subnet_id: "{{ vpc_subnet_id }}"
+      count: "{{ count }}"
+      ebs_optimized: "{{ ebs_optimized }}"
+      state: "{{ state }}"
+      key_name: "{{ key_name }}"
+

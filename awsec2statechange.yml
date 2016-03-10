@@ -7,15 +7,11 @@
   vars:
     instance_ids: "{{ instance_ids }}"
     state: "{{ state }}" # present, absent, running, stopped
-  vars_files:
-  - files/awscreds.yml 
 
   tasks:
   - name: Change state of a given EC2 instance
     ec2:
-      aws_access_key: "{{ aws_id }}"
-      aws_secret_key: "{{ aws_key }}" 
-      region: "{{ aws_region }}"
+      region: ap-southeast-1
       instance_ids: "{{ instance_ids }}"
       state: "{{ state }}"
 
