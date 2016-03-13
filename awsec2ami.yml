@@ -1,0 +1,23 @@
+---
+- hosts: local
+  remote_user: abhishek
+  connection: local
+  gather_facts: no
+  become_method: sudo
+  vars:
+    instance_id: "{{ var_instance_id }}"
+    name: "{{ var_name | default('Test') }}"
+    service: "{{ var_service | default('TestService') }}"
+    region: "{{ var_region | default('ap-southeast-1') }}"
+
+  tasks:
+  - name: Register/Delete an AMI which is based of an existing image
+    ec2_ami:
+      region: "{{ region }}"
+      instance_id: "{{ instance_id }}"
+      wait: no
+      name: "{{ name }}"
+      tags:
+        Name: "{{ name }}"
+        Service: "{{ service }}"
+    register: instance    
